@@ -18,7 +18,7 @@ class Post(models.Model):
     )
     
     update_at = models.DateTimeField(
-        auto_created=True, #Фиксирует время обновления (редактирования) поста
+        auto_now=True, #Фиксирует время обновления (редактирования) поста
         verbose_name='Дата обновления'
     )
     
