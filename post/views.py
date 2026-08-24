@@ -4,7 +4,7 @@ from .models import Post
 def post_list(request):
     posts = Post.objects.all().order_by('-created_at')
     context = {
-        'post' : posts,
+        'posts' : posts,
         'page_title' : 'Все посты блога'
     }
     return render(request, 'post/post_list.html', context)
