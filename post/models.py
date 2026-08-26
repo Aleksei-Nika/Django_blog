@@ -45,7 +45,7 @@ class Post(models.Model):
 class Comment(models.Model):
     post = models.ForeignKey(
         Post,
-        on_delete=models,
+        on_delete=models.CASCADE,
         verbose_name='Пост',
         related_name='comments' #post.comments.all()
     )
@@ -64,7 +64,7 @@ class Comment(models.Model):
         )
         
     def __str__(self):
-        return f'Комментарий от {self.authot} к {self.post.title}'
+        return f'Комментарий от {self.author} к {self.post.title}'
     
     class Meta:
         verbose_name = 'Комментарий',
