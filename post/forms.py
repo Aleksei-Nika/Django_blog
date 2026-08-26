@@ -11,9 +11,9 @@ class PostCreateForm(forms.ModelForm):
                 'placeholder' : 'Введите заголовок...'
             }),
             'content' : forms.Textarea(attrs={
-                            'class' : 'form-input',
-                            'placeholder' : 'содержание поста...'
-                        }),
+                'class' : 'form-input',
+                'placeholder' : 'содержание поста...'
+            }),
         }
         labels = {
             'title' : 'Заголовок',
@@ -25,11 +25,11 @@ class ComentForm(forms.ModelForm):
         model = Comment
         fields = ['text']
         widgets = {
-                    'text' : forms.Textarea(attrs={
-                                    'class' : 'form-input',
-                                    'placeholder' : 'Текст комментария...'
-                                }),
-                }
+            'text' : forms.Textarea(attrs={
+                'class' : 'form-input',
+                'placeholder' : 'Текст комментария...'
+            }),
+        }
         labels = {
-                    'text' : 'Текст',
-                }
+            'text' : 'Текст',
+        }
