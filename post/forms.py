@@ -32,4 +32,13 @@ class ComentForm(forms.ModelForm):
         }
         labels = {
             'text' : 'Текст',
+            'title': forms.TextInput(attrs={
+                'class': 'form-input',
+                'placeholder': 'Введите заголовок...'
+            }),
+            'content': forms.Textarea(attrs={
+                'class': 'form-input',
+                'placeholder': 'Введите текст поста...'
+            }),
         }
+
