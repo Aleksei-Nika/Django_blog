@@ -7,7 +7,7 @@
         {% for post in posts %}
             <article>
                 <h2>
-                    <a href="{% url 'post:post_detail' post.id %}">
+                    <a href="{% url 'post:post_details' post.id %}">
                         {{ post.title }}
                     </a>
                 </h2>
