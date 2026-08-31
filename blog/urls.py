@@ -22,5 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('post.urls')),
     path('lonig/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(next_page = 'post:post_list'), name='logout')
+    path('logout/', auth_views.LogoutView.as_view(next_page = 'post:post_list'), name='logout'),
+    path('accounts/', include('userAcc.urls', namespace='userAcc')),
 ]
