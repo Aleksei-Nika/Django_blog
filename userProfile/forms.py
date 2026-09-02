@@ -24,7 +24,7 @@ class UserUpdateForm(forms.ModelForm):
                 }
             ),
         }
-        lables = {'username': 'Имя пользователя',
+        labels = {'username': 'Имя пользователя',
                   'email': 'Электронная почта'}
 
 class ProfileForm(forms.ModelForm):
@@ -32,13 +32,13 @@ class ProfileForm(forms.ModelForm):
         model = Profile
         fields = ['bio', 'avatar']
         widgets = {
-            'bio' : forms.Textarea(artts = {
+            'bio' : forms.Textarea(attrs = {
                 'class' : 'form-input',
                 'placeholder' : 'Расскажите о себе',
                 'rows' :4
             }),
-        'avatar' : forms.FieldInput(attrs={
-            'class' : 'from-input',
+        'avatar' : forms.FileInput(attrs={
+            'class' : 'form-input',
             'accept' : 'image/*'
         }),
         }
