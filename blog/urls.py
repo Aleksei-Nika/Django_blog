@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
+from django.conf import settings
+from django.cons.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,4 +26,8 @@ urlpatterns = [
     path('lonig/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(next_page = 'post:post_list'), name='logout'),
     path('accounts/', include('userAcc.urls', namespace='userAcc')),
+    path('profile/', include('userProfile.urls'))
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, documents_root=settings.MEDIA_ROOT)
