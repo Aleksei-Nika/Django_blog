@@ -5,13 +5,13 @@ from django.shortcuts import redirect
 
 class BlockCheckMiddleware:
     def __init__(self, get_response):
-        self.get_respons = self.get_respons
+        self.get_response = get_response
         
     def __call__(self, request):
         if request.user.is_authenticated:
             profile = getattr(request.user, 'profile', None)
             if profile and profile.is_curently_blocked():
-                if profile.blocked_until.strftime():
+                if profile.blocked_until:
                     date_str = profile.blocked_until.strftime(
                         '%d.%m.%Y %H:%M'
                     )
@@ -24,8 +24,7 @@ class BlockCheckMiddleware:
                         request,
                         'Ваш профиль заблокирован навсегда'
                     )
-            else:
                 logout(request)
                 return redirect('login')
             
-            return self.get_respons(request)
+        return self.get_response(request)

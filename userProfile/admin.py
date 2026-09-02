@@ -7,7 +7,7 @@ from django.contrib.auth.admin import UserAdmin
 class ProfileInline(admin.StackedInline):
     model = Profile
     can_delete = False
-    fields = ('is_moderator', 'is_bloked', 'blocked_until', 'bio', 'avatar')
+    fields = ('is_moderator', 'is_bloсked', 'blocked_until', 'bio', 'avatar')
 
 class CastomUserAdmin(UserAdmin):
     inlines = [ProfileInline]
