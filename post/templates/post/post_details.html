@@ -21,7 +21,7 @@
         <div>
             {{ post.content }}
         </div>
-        {% if user == post.author %}
+        {% if user.is_authenticated and (post.can_delete or post.can_edit) %}
             <a href="{% url 'post:edit_post' post.id%}">
                 Редактировать
             </a>
@@ -56,6 +56,10 @@
             {% if comments %}
                 {% for comment in comments %}
                     {{ comment.created_at }} {{ comment.author }}
+                    {% if user.is_authenticated and comment.can_delete %}
+                        <a href="url 'post:comment_delete' comment.id">
+                            Удалить комментарий
+                        </a>
                     <p>{{ comment.text }}</p>
                 {% endfor %}
             {% endif %}
