@@ -98,7 +98,7 @@ def toggle_block_user(request, user_id):
             profile.save()
             messages.success(request, 'Пользователь заблокирован')
             
-        return redirect('userProfile:user_profile_view, user_id=user.id')
+        return redirect('userProfile:user_profile_view.html, user_id=user.id')
     
     context = {
         'block_user' : user,
