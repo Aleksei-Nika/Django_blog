@@ -77,7 +77,7 @@ def edit_post(request, post_id):
             messages.success(request, 'Пост обновлён')
             return redirect('post:post_details', post_id=post.id)
         else:
-            messages.error(redirect, 'Ошибки в форме')
+            messages.error(request, 'Ошибки в форме')
     else:
         form = PostCreateForm(instance=post)
     context = {
@@ -90,7 +90,7 @@ def edit_post(request, post_id):
 @login_required
 def delete_post(request, post_id):
     post = get_object_or_404(Post, pk=post_id, author=request.user)
-    if not post.can_delete(redirect.user):
+    if not post.can_delete(request.user):
         raise PermissionDenied('У вас нет прав на удаление')
     if request.method == 'POST':
         if 'confirm_delete' in request.POST:
@@ -121,7 +121,7 @@ def delete_comment(request, comment_id):
     if request.method == 'POST':
         if 'confirm_delete_comment' in request.POST:
             comment.delete()
-            messages.success('Комментарий успешно удален')
+            messages.success(request, 'Комментарий успешно удален')
         return redirect('post:post_details', post_id=post_id)
     
     context = {

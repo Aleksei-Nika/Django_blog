@@ -21,13 +21,17 @@
         <div>
             {{ post.content }}
         </div>
-        {% if user.is_authenticated and (post.can_delete or post.can_edit) %}
+        {% if user.is_authenticated %}
+            {% if post.can_edit %}
             <a href="{% url 'post:edit_post' post.id%}">
                 Редактировать
             </a>
+            {% endif %}
+            {% if post.can_delete %}
             <a href="{% url 'post:delete_post' post.id%}">
                 Удалить
             </a>
+            {% endif %}
         {% endif %}
         
         {% if delete_confirm %}
@@ -60,6 +64,7 @@
                         <a href="url 'post:comment_delete' comment.id">
                             Удалить комментарий
                         </a>
+                    {% endif %}
                     <p>{{ comment.text }}</p>
                 {% endfor %}
             {% endif %}
