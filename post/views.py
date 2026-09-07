@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Post, Comment
 from .forms import PostCreateForm, ComentForm
+from django.core.exceptions import PermissionDenied
 
 def post_list(request):
     posts = Post.objects.all().order_by('-created_at')
@@ -65,6 +66,9 @@ def create_post(request):
 @login_required
 def edit_post(request, post_id):
     post = get_object_or_404(Post, pk=post_id, author=request.user)
+    if not post.can_edit(request.user):
+        messages.error(request, 'нет прав редактирования')
+        return redirect('post:post_detail', post_id = post.id)
     if request.method == 'POST':
         # передача значений свойств объекта
         form = PostCreateForm(request.POST, instance=post)
@@ -86,6 +90,8 @@ def edit_post(request, post_id):
 @login_required
 def delete_post(request, post_id):
     post = get_object_or_404(Post, pk=post_id, author=request.user)
+    if not post.can_delete(redirect.user):
+        raise PermissionDenied('У вас нет прав на удаление')
     if request.method == 'POST':
         if 'confirm_delete' in request.POST:
             post.delete()
@@ -104,3 +110,23 @@ def delete_post(request, post_id):
     }
     return render(request, 'post/post_details.html', context)
             
+@login_required
+def delete_comment(request, comment_id):
+    comment = get_object_or_404(Comment, pk=comment_id)
+    if not comment.can_delete(request.user):
+        raise PermissionDenied('Нет прав на удаление')
+    
+    post_id = comment.post.id
+    
+    if request.method == 'POST':
+        if 'confirm_delete_comment' in request.POST:
+            comment.delete()
+            messages.success('Комментарий успешно удален')
+        return redirect('post:post_details', post_id=post_id)
+    
+    context = {
+        'comment' : comment,
+        'page_titile' : 'Удаление комментария'
+    }
+    
+    return render(request, 'post/comment_delete.html', context)
